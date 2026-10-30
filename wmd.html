@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coursera | Certificate Verification</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+    body {
+      font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1f1f1f;
+      background-color: #ffffff;
+    }
+    .coursera-blue {
+      color: #0056D2;
+    }
+    .bg-coursera-blue {
+      background-color: #0056D2;
+    }
+    .bg-coursera-light-blue {
+      background-color: #F5F7FA;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-[#1f1f1f] text-white text-xs py-2 px-4 flex justify-start items-center space-x-6 overflow-x-auto">
+    <a href="#" class="font-bold hover:underline whitespace-nowrap">For Individuals</a>
+    <a href="#" class="text-gray-300 hover:underline whitespace-nowrap">For Businesses</a>
+    <a href="#" class="text-gray-300 hover:underline whitespace-nowrap">For Universities</a>
+    <a href="#" class="text-gray-300 hover:underline whitespace-nowrap">For Governments</a>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="border-b border-gray-200 sticky top-0 bg-white z-20 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Left side: Hamburger button + Logo + Explore -->
+      <div class="flex items-center space-x-4">
+        <!-- 3-line Menu Button (Triggers Control Panel) -->
+        <button id="menu-btn" class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-1 border border-gray-200" title="Edit Certificate Options">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Coursera Logo -->
+        <a href="#" class="text-2xl font-bold text-[#0056D2] tracking-tight flex items-center gap-1">
+          coursera
+        </a>
+
+        <!-- Explore Dropdown -->
+        <div class="hidden sm:flex items-center text-sm font-semibold text-[#0056D2] hover:bg-blue-50 px-3 py-2 rounded cursor-pointer">
+          <span>Explore</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+        </div>
+
+        <a href="#" class="hidden lg:block text-sm font-semibold text-gray-700 hover:text-black">Degrees</a>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-xl mx-2 hidden md:block">
+        <div class="relative flex items-center">
+          <input 
+            type="text" 
+            placeholder="What do you want to learn?" 
+            class="w-full border border-gray-400 rounded-full py-2 pl-4 pr-12 text-sm focus:outline-none focus:border-blue-600"
+          >
+          <button class="absolute right-1 bg-[#0056D2] text-white p-2 rounded-full hover:bg-blue-700">
+            <i data-lucide="search" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Side Nav -->
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-sm font-semibold text-[#0056D2] hover:underline hidden sm:block">Log In</a>
+        <a href="#" class="border border-[#0056D2] text-[#0056D2] font-semibold text-sm px-4 py-2 rounded hover:bg-blue-50">
+          Join for Free
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR CONTROL PANEL (Slide-over drawer) -->
+  <div id="drawer-overlay" class="fixed inset-0 bg-black/40 z-30 hidden transition-opacity"></div>
+  <aside id="sidebar-drawer" class="fixed top-0 left-0 h-full w-80 sm:w-96 bg-white z-40 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-blue-600"></i> Certificate Editor
+        </h2>
+        <button id="close-drawer-btn" class="p-1 hover:bg-gray-100 rounded">
+          <i data-lucide="x" class="w-6 h-6 text-gray-600"></i>
+        </button>
+      </div>
+
+      <!-- Edit Form -->
+      <form id="cert-form" class="space-y-4 text-sm">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Course Title</label>
+          <input type="text" id="input-course" value="Programming Fundamentals in Kotlin" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Learner Name</label>
+          <input type="text" id="input-name" value="OMKAR RAJESH PHALKE" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Completion Date</label>
+          <input type="text" id="input-date" value="September 29, 2026" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Estimated Hours</label>
+          <input type="text" id="input-hours" value="24 hours (approximately)" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Organization / Partner Logo</label>
+          <input type="text" id="input-org" value="Meta" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">Upload Certificate Image</label>
+          <input type="file" id="input-cert-file" accept="image/*" class="w-full border p-2 rounded text-xs bg-gray-50 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer">
+          <p class="text-xs text-gray-500 mt-1">Upload image to display on the right preview block.</p>
+        </div>
+
+        <button type="submit" class="w-full bg-[#0056D2] text-white py-2.5 rounded font-semibold hover:bg-blue-700 transition">
+          Apply Changes
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- Course Header Title -->
+    <h1 id="display-course-title" class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
+      Programming Fundamentals in Kotlin
+    </h1>
+
+    <!-- TOP SECTION: Learner Info Block & Certificate Image Display -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
+      
+      <!-- Left Column: Verification Info Box -->
+      <div class="lg:col-span-5 bg-[#F5F7FA] p-6 sm:p-8 rounded-lg flex flex-col justify-between">
+        <div class="flex items-start space-x-4 mb-6">
+          <!-- Avatar Icon -->
+          <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center relative flex-shrink-0">
+            <i data-lucide="user" class="w-10 h-10 text-gray-400"></i>
+            <span class="absolute bottom-0 right-0 bg-white rounded-full p-0.5 border border-gray-300">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-gray-700 fill-gray-200"></i>
+            </span>
+          </div>
+
+          <!-- Name & Verification Badge -->
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 leading-snug">
+              Completed by <span id="display-name">OMKAR RAJESH PHALKE</span>
+            </h2>
+          </div>
+        </div>
+
+        <!-- Date & Duration -->
+        <div class="space-y-2 mb-6">
+          <p id="display-date" class="text-base font-semibold text-gray-900">September 29, 2026</p>
+          <p id="display-hours" class="text-sm text-gray-700">24 hours (approximately)</p>
+        </div>
+
+        <!-- Statement of Verification -->
+        <p class="text-sm text-gray-700 leading-relaxed">
+          <span id="display-name-2" class="font-semibold">OMKAR RAJESH PHALKE</span>'s account is verified. Coursera certifies their successful completion of <a href="#" id="display-course-link" class="underline text-[#0056D2] font-semibold">Programming Fundamentals in Kotlin</a>
+        </p>
+      </div>
+
+      <!-- Right Column: Interactive Certificate Preview Area -->
+      <div class="lg:col-span-7 flex justify-center items-center">
+        <div class="border-8 border-gray-200 rounded-lg p-2 bg-white shadow-lg w-full max-w-2xl relative overflow-hidden group">
+          <!-- Certificate Display Container -->
+          <div id="cert-container" class="aspect-[4/3] bg-gray-50 flex flex-col items-center justify-center p-6 text-center border border-gray-300 relative">
+            
+            <!-- Default SVG Mock Certificate Structure (Replaced when image is uploaded) -->
+            <div id="default-cert-view" class="w-full h-full flex flex-col justify-between border-2 border-gray-300 p-6 relative bg-white">
+              <!-- Top Logo Area -->
+              <div class="flex justify-between items-center mb-4">
+                <span id="display-org-name" class="text-2xl font-bold text-blue-600 tracking-wider">Meta</span>
+                <div class="text-right text-[10px] text-gray-400 uppercase tracking-widest">Course<br>Certificate</div>
+              </div>
+
+              <!-- Certificate Body Text -->
+              <div class="my-auto space-y-2">
+                <p class="text-xs text-gray-500 uppercase tracking-widest">This is to certify that</p>
+                <h3 id="cert-learner-name" class="text-xl font-bold text-gray-800 tracking-wide">OMKAR RAJESH PHALKE</h3>
+                <p class="text-xs text-gray-500">has successfully completed</p>
+                <h4 id="cert-course-name" class="text-sm font-semibold text-blue-900 italic">Programming Fundamentals in Kotlin</h4>
+                <p class="text-[10px] text-gray-400 mt-2">An online non-credit course authorized by Meta and offered through Coursera</p>
+              </div>
+
+              <!-- Ribbon Graphic Placeholder -->
+              <div class="flex justify-between items-end border-t pt-4">
+                <div class="text-left text-[9px] text-gray-400">
+                  Verify at:<br><span class="text-blue-500">coursera.org/verify/FYJEK9GTQRVK</span>
+                </div>
+                <div class="w-10 h-10 border border-blue-600 rounded-full flex items-center justify-center text-[8px] font-bold text-blue-600 uppercase">
+                  Coursera
+                </div>
+              </div>
+            </div>
+
+            <!-- Uploaded Image Preview (Hidden by default) -->
+            <img id="uploaded-cert-img" src="" alt="Uploaded Certificate" class="w-full h-full object-contain hidden absolute inset-0 bg-white">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COURSE DETAIL CARD & ENROLL BUTTON -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-t border-b py-6 mb-12 gap-4">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded flex items-center justify-center font-bold text-xl">
+          <i data-lucide="award" class="w-7 h-7"></i>
+        </div>
+        <div>
+          <h3 id="display-course-sub" class="text-lg font-bold text-gray-900">
+            Programming Fundamentals in Kotlin
+          </h3>
+          <p id="display-org-sub" class="text-sm text-gray-600">Meta</p>
+          <div class="flex items-center text-sm text-amber-500 space-x-1 mt-1">
+            <span class="font-bold text-gray-800">4.7</span>
+            <div class="flex">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+            </div>
+            <span class="text-gray-500 text-xs ml-2">(347 ratings) | 29,695 already enrolled</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="bg-[#0056D2] text-white px-8 py-3 rounded-md font-semibold hover:bg-blue-700 transition w-full sm:w-auto">
+        Enroll for Free
+      </button>
+    </div>
+
+    <!-- WHAT YOU WILL LEARN -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">What you will learn</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex items-start space-x-3">
+          <i data-lucide="check" class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"></i>
+          <span class="text-sm text-gray-800">Practice building and using functions</span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <i data-lucide="check" class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"></i>
+          <span class="text-sm text-gray-800">Practice different types of comparisons using operators</span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <i data-lucide="check" class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"></i>
+          <span class="text-sm text-gray-800">Use Kotlin to solve a coding challenge</span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <i data-lucide="check" class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"></i>
+          <span class="text-sm text-gray-800">Review and apply the fundamentals of programming</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS YOU WILL GAIN -->
+    <section class="mb-16">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Skills you will gain</h2>
+      <div class="flex flex-wrap gap-2">
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Code Reusability</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Computer Programming</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Kotlin</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Programming Principles</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Object Oriented Programming (OOP)</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Data Structures</span>
+        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-full font-medium">Android Development</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- COURSERA FOOTER -->
+  <footer class="bg-[#F5F7FA] border-t border-gray-200 text-sm text-gray-700 pt-12 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Footer Links Columns -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3">Skills</h4>
+          <ul class="space-y-2 text-xs text-gray-600">
+            <li><a href="#" class="hover:underline">Accounting</a></li>
+            <li><a href="#" class="hover:underline">Artificial Intelligence (AI)</a></li>
+            <li><a href="#" class="hover:underline">Cybersecurity</a></li>
+            <li><a href="#" class="hover:underline">Data Analytics</a></li>
+            <li><a href="#" class="hover:underline">Digital Marketing</a></li>
+            <li><a href="#" class="hover:underline">Python</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3">Professional Certificates</h4>
+          <ul class="space-y-2 text-xs text-gray-600">
+            <li><a href="#" class="hover:underline">Google AI Certificate</a></li>
+            <li><a href="#" class="hover:underline">Google Data Analytics Certificate</a></li>
+            <li><a href="#" class="hover:underline">IBM AI Engineering Certificate</a></li>
+            <li><a href="#" class="hover:underline">Meta Front-End Developer</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3">Courses & Specializations</h4>
+          <ul class="space-y-2 text-xs text-gray-600">
+            <li><a href="#" class="hover:underline">AI Essentials Specialization</a></li>
+            <li><a href="#" class="hover:underline">Machine Learning Specialization</a></li>
+            <li><a href="#" class="hover:underline">Deep Learning Specialization</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3">Coursera</h4>
+          <ul class="space-y-2 text-xs text-gray-600">
+            <li><a href="#" class="hover:underline">About</a></li>
+            <li><a href="#" class="hover:underline">Careers</a></li>
+            <li><a href="#" class="hover:underline">Leadership</a></li>
+            <li><a href="#" class="hover:underline">Catalog</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright & Social -->
+      <div class="border-t border-gray-300 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-gray-500">© 2026 Coursera Inc. All rights reserved.</p>
+        <div class="flex space-x-4 text-gray-600">
+          <i data-lucide="facebook" class="w-5 h-5 cursor-pointer hover:text-black"></i>
+          <i data-lucide="linkedin" class="w-5 h-5 cursor-pointer hover:text-black"></i>
+          <i data-lucide="twitter" class="w-5 h-5 cursor-pointer hover:text-black"></i>
+          <i data-lucide="youtube" class="w-5 h-5 cursor-pointer hover:text-black"></i>
+          <i data-lucide="instagram" class="w-5 h-5 cursor-pointer hover:text-black"></i>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC FOR DRAWER & EDITING -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // DOM Elements
+    const menuBtn = document.getElementById('menu-btn');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const sidebarDrawer = document.getElementById('sidebar-drawer');
+    const certForm = document.getElementById('cert-form');
+
+    // Drawer Toggle Logic
+    function openDrawer() {
+      sidebarDrawer.classList.remove('-translate-x-full');
+      drawerOverlay.classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+      sidebarDrawer.classList.add('-translate-x-full');
+      drawerOverlay.classList.add('hidden');
+    }
+
+    menuBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+
+    // Form Update Logic
+    certForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const courseTitle = document.getElementById('input-course').value;
+      const learnerName = document.getElementById('input-name').value;
+      const dateVal = document.getElementById('input-date').value;
+      const hoursVal = document.getElementById('input-hours').value;
+      const orgVal = document.getElementById('input-org').value;
+      const fileInput = document.getElementById('input-cert-file');
+
+      // Update text fields across the page
+      document.getElementById('display-course-title').innerText = courseTitle;
+      document.getElementById('display-course-sub').innerText = courseTitle;
+      document.getElementById('display-course-link').innerText = courseTitle;
+      document.getElementById('cert-course-name').innerText = courseTitle;
+
+      document.getElementById('display-name').innerText = learnerName;
+      document.getElementById('display-name-2').innerText = learnerName;
+      document.getElementById('cert-learner-name').innerText = learnerName;
+
+      document.getElementById('display-date').innerText = dateVal;
+      document.getElementById('display-hours').innerText = hoursVal;
+
+      document.getElementById('display-org-name').innerText = orgVal;
+      document.getElementById('display-org-sub').innerText = orgVal;
+
+      // Handle Image File Upload
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const uploadedImg = document.getElementById('uploaded-cert-img');
+          const defaultView = document.getElementById('default-cert-view');
+
+          uploadedImg.src = evt.target.result;
+          uploadedImg.classList.remove('hidden');
+          defaultView.classList.add('opacity-0'); // keep layout standard or hide default
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      }
+
+      // Close drawer after applying
+      closeDrawer();
+    });
+  </script>
+
+</body>
+</html>
